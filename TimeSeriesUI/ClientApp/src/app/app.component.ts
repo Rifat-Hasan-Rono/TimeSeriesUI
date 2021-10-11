@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import dayjs from 'dayjs';
 import * as Highcharts from 'highcharts';
+import moment from 'moment';
 import { DataService } from './data.service';
 
 
@@ -13,7 +15,11 @@ export class AppComponent implements OnInit {
     objectId: 0,
     dataFieldId: 0
   };
-  constructor(private dataService: DataService) { }
+  selected: any = { startDate: null, endDate: null };
+  constructor(private dataService: DataService) {
+    this.selected.startDate = moment('10/22/2022 2:10:00 PM', 'MM-DD-YYYY HH:mm A');
+    this.selected.endDate = moment('10/22/2022 2:20:00 PM', 'MM-DD-YYYY HH:mm A');;
+  }
   public buildings=[];
   public objects = [];
   public dataFields = [];
@@ -37,7 +43,9 @@ export class AppComponent implements OnInit {
       }
     })
 
-    this.dataService.getReadingList(0, 0, 0, '10/22/2022 2:10:00 PM', '10/22/2022 2:15:00 PM').subscribe((data: any[]) => {
+    var startDateTime = this.selected.startDate.format('MM/DD/YYYY HH:mm:ss A');
+    var endDateTime = this.selected.endDate.format('MM/DD/YYYY HH:mm:ss A');
+    this.dataService.getReadingList(0, 0, 0, startDateTime, endDateTime).subscribe((data: any[]) => {
       this.chartOptions ={
         chart: {
           zoomType: 'x'
@@ -50,7 +58,10 @@ export class AppComponent implements OnInit {
             'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
         },
         xAxis: {
-          type: 'datetime'
+          type: 'datetime',
+          labels: {
+            enabled: false
+          }
         },
         yAxis: {
           title: {
@@ -71,6 +82,7 @@ export class AppComponent implements OnInit {
               },
               stops: [
                 [0, Highcharts.getOptions().colors[0]],
+                [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba').toString()]
               ]
             },
             marker: {
@@ -95,7 +107,9 @@ export class AppComponent implements OnInit {
   }
 
   onInitChart() {
-    this.dataService.getReadingList(this.search.buildingId, this.search.objectId, this.search.dataFieldId, '2022-10-22 14:10:00.000', '2022-10-23 04:10:00.000').subscribe((data: any[]) => {
+    var startDateTime = this.selected.startDate.format('MM/DD/YYYY HH:mm:ss A');
+    var endDateTime = this.selected.endDate.format('MM/DD/YYYY HH:mm:ss A');
+    this.dataService.getReadingList(this.search.buildingId, this.search.objectId, this.search.dataFieldId, startDateTime, endDateTime).subscribe((data: any[]) => {
       this.chartOptions = {
         series: [{
           type: 'area',

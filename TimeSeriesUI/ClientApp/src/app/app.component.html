@@ -5,28 +5,34 @@
       <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
         <label for="building">Building</label>
         <select name="building"
-                id="building" 
-                class="form-control" [(ngModel)]="search.buildingId" >
+                id="building"
+                class="form-control" [(ngModel)]="search.buildingId">
           <option *ngFor="let method of buildings" [value]="method.id">{{ method.label }}</option>
         </select>
       </div>
       <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
         <label for="object">Object</label>
-        <select name="object"  
+        <select name="object"
                 id="object"
-                class="form-control" [(ngModel)]="search.objectId" >
+                class="form-control" [(ngModel)]="search.objectId">
           <option *ngFor="let method of objects" [value]="method.id">{{ method.label }}</option>
         </select>
-       </div>
+      </div>
       <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
         <label for="dataField">DataField</label>
         <select name="dataField"
                 id="dataField"
-                class="form-control" [(ngModel)]="search.dataFieldId" >
+                class="form-control" [(ngModel)]="search.dataFieldId">
           <option *ngFor="let method of dataFields" [value]="method.id">{{ method.label }}</option>
         </select>
       </div>
-      <button (click)="onInitChart()"  class="btn btn-primary">Submit</button>
+      <input type="text" name="dateField"
+             ngxDaterangepickerMd
+             [timePicker]="true"
+             [timePickerSeconds]="true"
+             [timePicker24Hour]="true" 
+             [(ngModel)]="selected" class="form-control col-md-4" />
+      <button (click)="onInitChart()" class="btn btn-primary">Submit</button>
     </form>
     
     <highcharts-chart [Highcharts]="Highcharts"
