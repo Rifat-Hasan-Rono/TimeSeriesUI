@@ -32,7 +32,7 @@
              [timePickerSeconds]="true"
              [timePicker24Hour]="true" 
              [(ngModel)]="selected" class="form-control col-md-4" />
-      <button (click)="onInitChart()" class="btn btn-primary">Submit</button>
+      <button (click)="onInitChart()" class="btn btn-primary">Search</button>
     </form>
     <div *ngIf="loading" class="loader"></div>
     <highcharts-chart [Highcharts]="Highcharts"
