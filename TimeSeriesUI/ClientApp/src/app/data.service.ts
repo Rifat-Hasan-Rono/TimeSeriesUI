@@ -16,6 +16,6 @@ export class DataService {
 
   public getReadingList(buildingId: number, objectId: number, dataFieldId: number, from: string, to: string) {
     return this.httpClient.get(this.REST_API_SERVER + 'GetTimeSeriesDataList?buildingId=' + buildingId + '&objectId=' + objectId
-      + '&dataFieldId=' + dataFieldId + '&from=' + from+'&to=' + to);
+      + '&dataFieldId=' + dataFieldId + '&from=' + from + '&to=' + to);
   }
 }
